@@ -1,7 +1,7 @@
 import React from "react"
 
 import AdminSider from '../../components/sider.jsx';
-class Login extends React.Component{
+class Index extends React.Component{
     render(){
         return (
             <AdminSider keys={'team_add'}>
@@ -10,4 +10,4 @@ class Login extends React.Component{
         )
     }
 }
-export default Login;
+export default Index;
