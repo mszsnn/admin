@@ -23,7 +23,7 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <div class='app'>
+                <div className='app'>
                     <Route path="/admin/login/index" component={Index}/>
                     <Route path="/admin/login/login" component={Login}/>
                     <Route path="/admin/login/pass" component={Pass}/>
