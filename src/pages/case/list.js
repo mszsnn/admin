@@ -21,7 +21,10 @@ class CaseList extends React.Component{
         )
     }
     componentDidMount(){
-        fetch('/api/test').then(r=>r.json()).then(d=>this.setState({data:d}))
+        console.log(1);
+        fetch('/api/news/show').then(r=>r.json()).then(d=>{
+            console.log(d);
+        })
     }
 }
 export default CaseList;
