@@ -29,16 +29,16 @@ class App extends Component {
                     <Route path="/admin/login/pass" component={Pass}/>
                     <Route path="/admin/news/add" component={NewsAdd}/>
                     <Route path="/admin/news/list" component={NewsList}/>
-                    <Route path="/admin/news/eidt" component={NewsEdit}/>
+                    <Route path="/admin/news/edit" component={NewsEdit}/>
                     <Route path="/admin/service/add" component={ServiceAdd}/>
                     <Route path="/admin/service/list" component={ServiceList}/>
-                    <Route path="/admin/service/eidt" component={ServiceEdit}/>
+                    <Route path="/admin/service/edit" component={ServiceEdit}/>
                     <Route path="/admin/case/add" component={CaseAdd}/>
                     <Route path="/admin/case/list" component={CaseList}/>
-                    <Route path="/admin/case/eidt" component={CaseEdit}/>
+                    <Route path="/admin/case/edit" component={CaseEdit}/>
                     <Route path="/admin/team/add" component={TeamAdd}/>
                     <Route path="/admin/team/list" component={TeamList}/>
-                    <Route path="/admin/team/eidt" component={TeamEdit}/>
+                    <Route path="/admin/team/edit" component={TeamEdit}/>
                 </div>
             </Router>
         );
