@@ -9,6 +9,7 @@ class ServiceList extends React.Component {
     this.state={
         data:[]
     }
+    this.handleDelete = this.handleDelete.bind(this);   
   }
   componentDidMount() {
     fetch('/api/service/show').then(r=>r.json()).then(res=>{
@@ -17,7 +18,27 @@ class ServiceList extends React.Component {
        })
     })
   }
+  fetchData(){
+    fetch('/api/service/show').then(r=>r.json()).then(res=>{
+      this.setState({
+       data:res
+      })
+   })
+  }
+  handleDelete(v){
+    fetch('/api/service/del?id='+v).then(r=>r.text()).then(r=>{
+        if(r==="ok"){
+          message.success('删除成功',1);
+          this.fetchData();
+        }
+    })
+  }
   render() {
+    let {data}=this.state;
+    data.forEach(v=>{
+      v.key=v.id;
+      
+    })
     const columns = [{
         title:'ID',
         dataIndex:'id',
@@ -38,19 +59,12 @@ class ServiceList extends React.Component {
         title: '操作',
         key: 'handle',
         render: (obj, record) => (
-            <span>
-            <a style={{ marginRight: 10 }}>删除</a>
-            <Link to="/admin/service/edit">编辑</Link>
-            </span>
+          <span>
+            <a style={{ marginRight: 10 }} onClick={()=>{this.handleDelete(obj.id)}}>删除</a>
+            <Link to="/admin/service/edit" id = {obj.id}>编辑</Link>
+          </span>
         ),
     }];
-
-    let {data}=this.state;
-    data.forEach(v=>{
-      v.key=v.id;
-      
-    })
-    console.log(data);
     return (
       <AdminSider keys={'service_list'}>
         <Table columns={columns} dataSource={data} />
