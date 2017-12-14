@@ -17,6 +17,20 @@ class ServiceList extends React.Component {
        })
     })
   }
+  handleDelete(v){
+    fetch('/api/service/del?id='+v).then(r=>r.text()).then(r=>{
+        if(r==="ok"){
+          message.success('删除成功',1);
+          let data  = this.state.data.filter(element=>element.id != v);
+          this.setState({
+            data:data
+           })
+        }
+    })
+  }
+
+
+
   render() {
     const columns = [{
         title:'ID',
@@ -39,7 +53,7 @@ class ServiceList extends React.Component {
         key: 'handle',
         render: (obj, record) => (
             <span>
-            <a style={{ marginRight: 10 }}>删除</a>
+            <a style={{ marginRight: 10 }} onClick={()=>{this.handleDelete(obj.id)}}>删除</a>
             <Link to="/admin/service/edit">编辑</Link>
             </span>
         ),
@@ -50,7 +64,6 @@ class ServiceList extends React.Component {
       v.key=v.id;
       
     })
-    console.log(data);
     return (
       <AdminSider keys={'service_list'}>
         <Table columns={columns} dataSource={data} />
