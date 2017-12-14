@@ -1,6 +1,9 @@
 import React from "react"
 import AdminSider from '../../components/sider.jsx';
 import {Table, Icon, Divider,message} from 'antd';
+import {
+    Link
+} from 'react-router-dom'
 class TeamList extends React.Component {
     constructor(){
         super();
@@ -33,9 +36,8 @@ class TeamList extends React.Component {
     }
     render() {
         let {data}=this.state;
-        data=data.map((v)=>{
+        data.forEach((v)=>{
             v.key=v.id;
-            return v;
         });
         const columns=[{
             title: '姓名',
@@ -63,7 +65,7 @@ class TeamList extends React.Component {
             render: (v) => (
                 <span>
       <a  onClick={()=>{this.handleDelete(v)}}>删除</a><Divider type="vertical" />
-                    <a href="#">修改</a>
+                    <Link to="/admin/team/eidt">修改</Link>
     </span>
             ),
         }];
