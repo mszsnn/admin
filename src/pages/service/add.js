@@ -1,16 +1,12 @@
-import React from 'react';
+import React from "react"
 import AdminSider from '../../components/sider.jsx';
-import {Form,Input,Tooltip,Icon,Cascader,Select,Row,Col,Checkbox,Button,AutoComplete} from 'antd';
-import Editor from '../team/Editor.js';
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
 class RegistrationForm extends React.Component {
-    constructor(){
-        super();
-        this.EditorChange=this.EditorChange.bind(this);
-    }
+
     state = {
         confirmDirty: false,
         autoCompleteResult: [],
@@ -101,11 +97,11 @@ class RegistrationForm extends React.Component {
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
                     {...formItemLayout}
-                    label="服务名称"
+                    label="姓名"
                 >
-                    {getFieldDecorator('title', {
+                    {getFieldDecorator('name', {
                         rules: [ {
-                            required: true, message: '请输入服务名称',
+                            required: true, message: '请输入成员姓名',
                         }],
                     })(
                         <Input />
@@ -113,15 +109,38 @@ class RegistrationForm extends React.Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="英文名称"
+                    label="英文姓名"
                 >
-                    {getFieldDecorator('subtitle', {
+                    {getFieldDecorator('ename', {
                         rules: [{
-                            required: true, message: '请输入服务英文名称',
+                            required: true, message: '请输入成员英文姓名',
                         }],
                     })(
                         <Input type="text" />
                     )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label="职位"
+                >
+                    {getFieldDecorator('position', {
+                        rules: [{
+                            required: true, message: '请输入成员职位',
+                        }],
+                    })(
+                        <Input type="text" />
+                    )}
+                </FormItem>
+                <FormItem {...editorStyle} label="描述" >
+                    {
+                        getFieldDecorator('content')
+                        (
+                            <Editor
+                                action=''
+                                onChange={this.EditorChange}
+                            />
+                        )}
+
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">提交</Button>
@@ -132,15 +151,12 @@ class RegistrationForm extends React.Component {
 }
 const WrappedRegistrationForm = Form.create()(RegistrationForm);
 class ServiceAdd extends React.Component{
-    constructor(){
-        super();
-        this.state = {
-            data:[]
-        }
+    state = {
+        data:[]
     }
     render(){
-        return(
-            <AdminSider keys={'service_add'}>
+        return (
+            <AdminSider keys={'team_add'}>
                 <WrappedRegistrationForm/>
             </AdminSider>
         )
