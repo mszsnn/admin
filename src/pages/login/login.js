@@ -1,5 +1,10 @@
 import React from 'react';
+// import { browserHistory } from 'react-router'  //引入路由函数
+import {
+  BrowserRouter as Router,
+} from 'react-router-dom';
 import { Form, Icon, Input, Button } from 'antd';
+import { message} from 'antd';
 import './login.css'
 const FormItem = Form.Item;
 
@@ -25,11 +30,14 @@ class LoginForm extends React.Component {
                 "Content-Type": "application/json"
             }
         }).then(r=>r.text()).then(res=>{
-            console.log(res);
+            if(res == 1){
+              message.success('登陆成功');
+              // Router.push('/admin/service/add');
+            }else{
+              message.warning('登陆失败，请重新输入');              
+            }
         })
-        // .then(r=>r.json()).then(res=>{
-        //      console.log(res);
-        // })
+        
       }
     });
   }
