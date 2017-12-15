@@ -29,7 +29,7 @@ class App extends Component {
                     <Route path="/admin/login/pass" component={Pass}/>
                     <Route path="/admin/news/add" component={NewsAdd}/>
                     <Route path="/admin/news/list" component={NewsList}/>
-                    <Route path="/admin/news/edit" component={NewsEdit}/>
+                    <Route path="/admin/news/edit/:id" component={NewsEdit}/>
                     <Route path="/admin/service/add" component={ServiceAdd}/>
                     <Route path="/admin/service/list" component={ServiceList}/>
                     <Route path="/admin/service/edit" component={ServiceEdit}/>
