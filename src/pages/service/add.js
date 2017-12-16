@@ -1,9 +1,9 @@
 import React from "react"
 import AdminSider from '../../components/sider.jsx';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Icon,  Select, Button, AutoComplete } from 'antd';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
+// const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
 class RegistrationForm extends React.Component {
 

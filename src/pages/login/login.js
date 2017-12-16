@@ -1,8 +1,10 @@
 import React from 'react';
-// import { browserHistory } from 'react-router'  //引入路由函数
 import {
   BrowserRouter as Router,
-} from 'react-router-dom';
+  Route,
+  Link,
+  Redirect
+} from 'react-router-dom'
 import { Form, Icon, Input, Button } from 'antd';
 import { message} from 'antd';
 import './login.css'
@@ -21,7 +23,7 @@ class LoginForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-        var values = JSON.stringify(values);
+      values = JSON.stringify(values);
       if (!err) {
         fetch('/api/login/check',{
             "method":"post",
@@ -32,6 +34,8 @@ class LoginForm extends React.Component {
         }).then(r=>r.text()).then(res=>{
             if(res == 1){
               message.success('登陆成功');
+                           
+              // this.props.history.push('/admin/service/add')              
               // Router.push('/admin/service/add');
             }else{
               message.warning('登陆失败，请重新输入');              
@@ -43,10 +47,11 @@ class LoginForm extends React.Component {
   }
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-
+  
     // Only show error after a field is touched.
     const usernameError = isFieldTouched('username') && getFieldError('username');
     const passwordError = isFieldTouched('password') && getFieldError('password');
+    
     return (
       <div className='box'>
         <header className='header'>
@@ -96,7 +101,10 @@ class Login extends React.Component{
   render(){
     return (
       <div>
-        <LoginF/>
+        {
+          this.state.login ? <Redirect to="/admin/service/list"/> : <LoginF/>
+        }
+       
       </div>
     )
   }
