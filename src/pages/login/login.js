@@ -29,7 +29,9 @@ class LoginForm extends React.Component {
         }).then(r=>r.text()).then(res=>{
             if(res == 1){
               message.success('登陆成功');
-               this.props.data();          
+              this.props.data();  
+              sessionStorage.isLogin = true;
+              sessionStorage.user = JSON.parse(values).username;
             }else{
               message.warning('登陆失败，请重新输入');              
             }
@@ -97,6 +99,9 @@ class Login extends React.Component{
       login:false
     }
     this.handleLogin = this.handleLogin.bind(this);
+  }
+  componentDidMount(){
+    sessionStorage.clear();
   }
   handleLogin(){
     this.setState({login:true});
