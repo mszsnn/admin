@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect
-} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { Form, Icon, Input, Button } from 'antd';
 import { message} from 'antd';
 import './login.css'
-import { fn } from 'moment';
 const FormItem = Form.Item;
 
 function hasErrors(fieldsError) {
@@ -36,8 +30,6 @@ class LoginForm extends React.Component {
             if(res == 1){
               message.success('登陆成功');
                this.props.data();          
-              // this.props.history.push('/admin/service/add')              
-              // Router.push('/admin/service/add');
             }else{
               message.warning('登陆失败，请重新输入');              
             }

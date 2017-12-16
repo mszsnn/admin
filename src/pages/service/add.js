@@ -131,17 +131,6 @@ class RegistrationForm extends React.Component {
                         <Input type="text" />
                     )}
                 </FormItem>
-                {/* <FormItem {...editorStyle} label="描述" >
-                    {
-                        getFieldDecorator('content')
-                        (
-                            <Editor
-                                action=''
-                                onChange={this.EditorChange}
-                            />
-                        )}
-
-                </FormItem> */}
                 <FormItem {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">提交</Button>
                 </FormItem>
