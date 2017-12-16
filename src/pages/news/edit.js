@@ -65,10 +65,10 @@ class RegistrationForm extends React.Component {
         sm: { span: 21 },
       },
     };
-   
+    
     const c={
       action:"/public/upload",
-      con:this.props.props.content,
+      content:this.props.props.content,
     }
     return (
       <Form onSubmit={this.handleSubmit}>

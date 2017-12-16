@@ -20,14 +20,19 @@ class Editor extends React.Component{
             editor.change();
             that.props.onChange(html);
         }  
-        editor.create()
+        editor.create();
     }
-
+    componentDidUpdate(){
+        if(this.e.txt.html()=='<p><br></p>'){
+            this.e.txt.html(this.props.content);
+        }else{
+            return;
+        }    
+    }
     render(){
-        const content=this.props.con;
         return(
             <div ref={(el)=>this.el=el} id="editor">
-               <div>{content}</div>
+               
             </div>
         )
     }
