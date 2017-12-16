@@ -1,6 +1,7 @@
 import React from "react"
 import AdminSider from '../../components/sider.jsx';
 import { Form, Input, Button,message } from 'antd';
+import { Redirect } from 'react-router-dom'
 const FormItem = Form.Item;
 
 
@@ -31,6 +32,7 @@ class RegistrationForm extends React.Component {
         }).then(r => r.text()).then(res => {
           if(res==='ok'){
             message.success("修改成功");
+            this.props.data();
           }else{
             message.warning("修改失败");
           }
@@ -132,22 +134,32 @@ class Pass extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: {user:'',pass:'',passtwo:''}
+      data: {user:'',pass:'',passtwo:''},
+      islogin:false
     }
+    this.login=this.login.bind(this);
+  }
+  login(){
+    this.setState({
+       login:true 
+    })
   }
   componentDidMount(){
-    sessionStorage.user='admin';
     if(sessionStorage.user){
       this.setState({
-        data: {user:'admin',pass:'',passtwo:''}
+        data: {user:sessionStorage.user,pass:'',passtwo:''},      
       }) 
+     
     }
   }
   render() {
     return (
-      <AdminSider keys={'Pass'}>
-        <WrappedRegistrationForm  props={this.state.data}></WrappedRegistrationForm>
-      </AdminSider>
+      <div>
+        { this.state.login ? <Redirect to="/admin/login/login"/> :<AdminSider keys={'Pass'}>
+        <WrappedRegistrationForm  props={this.state.data} data={this.login}></WrappedRegistrationForm>
+      </AdminSider> }
+      </div>
+      
     )
   }
 }
