@@ -2,6 +2,7 @@ import React from "react"
 import AdminSider from '../../components/sider.jsx';
 import { Form, Input, Button,message } from 'antd';
 import Editor from "./Editor";
+import { Redirect } from 'react-router-dom'
 const FormItem = Form.Item;
 
 
@@ -24,6 +25,7 @@ class RegistrationForm extends React.Component {
         }).then(r => r.text()).then(res => {
           if(res==='ok'){
             message.success("添加成功");
+            this.props.data();
           }else{
             message.warning("添加失败");
           }
@@ -139,14 +141,25 @@ class NewsAdd extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: {title:'',engtitle:'',description:'',content:''}
+      data: {title:'',engtitle:'',description:'',content:''},
+      isSuccess:false
     }
+    this.changeSuccess=this.changeSuccess.bind(this)
+  }
+  changeSuccess(){
+    this.setState({
+      isSussess:true
+    })
   }
   render() {
     return (
-      <AdminSider keys={'news_add'}>
-        <WrappedRegistrationForm props={this.state.data}></WrappedRegistrationForm>
-      </AdminSider>
+      <div>
+         {
+          this.state.isSussess ? <Redirect to="/admin/news/list"/> :  <AdminSider keys={'news_add'}>
+          <WrappedRegistrationForm props={this.state.data} data={this.changeSuccess}></WrappedRegistrationForm>
+        </AdminSider>
+        }
+      </div>
     )
   }
 }

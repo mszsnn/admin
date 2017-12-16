@@ -23,7 +23,7 @@ class Editor extends React.Component{
         editor.create();
     }
     componentDidUpdate(){
-        if(this.e.txt.html()=='<p><br></p>'){
+        if(this.e.txt.html()==='<p><br></p>'){
             this.e.txt.html(this.props.content);
         }else{
             return;
