@@ -8,6 +8,7 @@ import {
 import { Form, Icon, Input, Button } from 'antd';
 import { message} from 'antd';
 import './login.css'
+import { fn } from 'moment';
 const FormItem = Form.Item;
 
 function hasErrors(fieldsError) {
@@ -34,7 +35,7 @@ class LoginForm extends React.Component {
         }).then(r=>r.text()).then(res=>{
             if(res == 1){
               message.success('登陆成功');
-                           
+               this.props.data();          
               // this.props.history.push('/admin/service/add')              
               // Router.push('/admin/service/add');
             }else{
@@ -51,7 +52,7 @@ class LoginForm extends React.Component {
     // Only show error after a field is touched.
     const usernameError = isFieldTouched('username') && getFieldError('username');
     const passwordError = isFieldTouched('password') && getFieldError('password');
-    
+  
     return (
       <div className='box'>
         <header className='header'>
@@ -98,11 +99,21 @@ class LoginForm extends React.Component {
 
 const LoginF = Form.create()(LoginForm);
 class Login extends React.Component{
+  constructor(){
+    super();
+    this.state={
+      login:false
+    }
+    this.handleLogin = this.handleLogin.bind(this);
+  }
+  handleLogin(){
+    this.setState({login:true});
+  }
   render(){
     return (
       <div>
         {
-          this.state.login ? <Redirect to="/admin/service/list"/> : <LoginF/>
+          this.state.login ? <Redirect to="/admin/service/list"/> : <LoginF data={this.handleLogin}/>
         }
        
       </div>
