@@ -54,7 +54,7 @@ class ServiceList extends React.Component {
         render: (obj, record) => (
             <span>
             <a style={{ marginRight: 10 }} onClick={()=>{this.handleDelete(obj.id)}}>删除</a>
-            <Link to="/admin/service/edit">编辑</Link>
+            <Link to={"/admin/service/edit/"+obj.id}>编辑</Link>
             </span>
         ),
     }];

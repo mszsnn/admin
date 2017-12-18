@@ -32,7 +32,7 @@ class App extends Component {
                     <Route path="/admin/news/edit/:id" component={NewsEdit}/>
                     <Route path="/admin/service/add" component={ServiceAdd}/>
                     <Route path="/admin/service/list" component={ServiceList}/>
-                    <Route path="/admin/service/edit" component={ServiceEdit}/>
+                    <Route path="/admin/service/edit/:id" component={ServiceEdit}/>
                     <Route path="/admin/case/add" component={CaseAdd}/>
                     <Route path="/admin/case/list" component={CaseList}/>
                     <Route path="/admin/case/edit" component={CaseEdit}/>
