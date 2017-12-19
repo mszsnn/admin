@@ -35,10 +35,10 @@ class App extends Component {
                     <Route path="/admin/service/edit/:id" component={ServiceEdit}/>
                     <Route path="/admin/case/add" component={CaseAdd}/>
                     <Route path="/admin/case/list" component={CaseList}/>
-                    <Route path="/admin/case/edit" component={CaseEdit}/>
+                    <Route path="/admin/case/edit/:id" component={CaseEdit}/>
                     <Route path="/admin/team/add" component={TeamAdd}/>
                     <Route path="/admin/team/list" component={TeamList}/>
-                    <Route path="/admin/team/edit" component={TeamEdit}/>
+                    <Route path="/admin/team/edit/:id" component={TeamEdit}/>
                 </div>
             </Router>
         );

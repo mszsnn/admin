@@ -1,9 +1,9 @@
 import React from "react"
 import AdminSider from '../../components/sider.jsx';
-import {Table, Icon, Divider, message} from 'antd';
+import {Table, Icon, Divider, message,Popconfirm} from 'antd';
 import {
     Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 class CaseList extends React.Component {
     constructor() {
         super();
@@ -58,7 +58,7 @@ class CaseList extends React.Component {
             dataIndex: 'img',
             key: 'img',
         }, {
-            title: '更新时间',
+            title: '时间',
             dataIndex: 'upDateTime',
             key: 'upDataTime',
         }, {
@@ -66,9 +66,10 @@ class CaseList extends React.Component {
             key: 'action',
             render: (v) => (
                 <span>
-      <a onClick={() => {
-          this.handleDelete(v)
-      }}>删除</a><Divider type="vertical"/>
+      <Popconfirm title="Are you sure?" okText="Yes" cancelText="No" onConfirm={() => { this.handleDelete(v.id) }}>
+            <a style={{ marginRight: 10 }}>删除</a>
+          </Popconfirm>
+                    <Divider type="vertical"/>
                     <Link to={"/admin/case/edit/"+v.id}>编辑</Link>
     </span>
             ),
