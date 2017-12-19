@@ -1,75 +1,47 @@
 import React from "react"
 import AdminSider from '../../components/sider.jsx';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Button,message } from 'antd';
 import Editor from "./Editor";
+import { Redirect } from 'react-router-dom'
 const FormItem = Form.Item;
-const Option = Select.Option;
-const AutoCompleteOption = AutoComplete.Option;
+
+
 class RegistrationForm extends React.Component {
-    constructor(){
-        super();
-        this.EditorChange=this.EditorChange.bind(this);
-    }
     state = {
         confirmDirty: false,
-        autoCompleteResult: [],
     };
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                values=JSON.stringify(values);
+                fetch('/api/team/add',{
+                    "method":'post',
+                    "body":values,
+                    "headers":{
+                        "Content-Type":"application/json"
+                    }
+                }).then(r => r.text()).then(res => {
+                    if(res==='ok'){
+                        message.success("添加成功");
+                        this.props.data();
+                    }else{
+                        message.warning("添加失败");
+                    }
+                })
             }
         });
     }
-    handleConfirmBlur = (e) => {
-        const value = e.target.value;
-        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-    }
-    checkPassword = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && value !== form.getFieldValue('password')) {
-            callback('Two passwords that you enter is inconsistent!');
-        } else {
-            callback();
-        }
-    }
-    checkConfirm = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && this.state.confirmDirty) {
-            form.validateFields(['confirm'], { force: true });
-        }
-        callback();
-    }
-
-    handleWebsiteChange = (value) => {
-        let autoCompleteResult;
-        if (!value) {
-            autoCompleteResult = [];
-        } else {
-            autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-        }
-        this.setState({ autoCompleteResult });
-    }
-    EditorChange(html){
-    }
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { autoCompleteResult } = this.state;
-        const uploadButton = (
-            <div>
-                <Icon type="plus" />
-                <div className="ant-upload-text">点击开始上传</div>
-            </div>
-        );
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 8 },
+                sm: { span: 3 },
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 10 },
             },
         };
         const tailFormItemLayout = {
@@ -79,35 +51,39 @@ class RegistrationForm extends React.Component {
                     offset: 0,
                 },
                 sm: {
-                    span: 16,
-                    offset: 8,
+                    span: 24,
+                    offset: 3
                 },
             },
         };
-
-        const websiteOptions = autoCompleteResult.map(website => (
-            <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-        ));
-        const editorStyle = {
+        const fu = {
             labelCol: {
-                sm: { span: 4}
+                xs: { span: 24 },
+                sm: { span: 3 },
             },
             wrapperCol: {
-                sm: { span:20}
+                xs: { span: 24 },
+                sm: { span: 21 },
             },
         };
+
+        const c={
+            action:"/public/upload",
+        }
         return (
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
                     {...formItemLayout}
-                    label="姓名"
+                    label="成员姓名"
                 >
                     {getFieldDecorator('name', {
-                        rules: [ {
-                            required: true, message: '请输入成员姓名',
+                        initialValue: this.props.props.title,
+                        rules: [{
+                            required: true, message: 'Please input your title!',
+                            max:10,message:"请输入10个字符以内"
                         }],
                     })(
-                        <Input />
+                        <Input type="text" />
                     )}
                 </FormItem>
                 <FormItem
@@ -115,8 +91,10 @@ class RegistrationForm extends React.Component {
                     label="英文姓名"
                 >
                     {getFieldDecorator('ename', {
+                        initialValue: this.props.props.engtitle,
                         rules: [{
-                            required: true, message: '请输入成员英文姓名',
+                            required: true, message: '请输入英文姓名!',
+                            max:10,message:"请输入10个字符以内"
                         }],
                     })(
                         <Input type="text" />
@@ -124,26 +102,27 @@ class RegistrationForm extends React.Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="职位"
+                    label="成员职位"
                 >
                     {getFieldDecorator('position', {
+                        initialValue: this.props.props.description,
                         rules: [{
-                            required: true, message: '请输入成员职位',
+                            required: true, message: '请输入职位!',
+                            max:10,message:"请输入10个字符以内"
                         }],
                     })(
                         <Input type="text" />
                     )}
                 </FormItem>
-                <FormItem {...editorStyle} label="描述" >
-                    {
-                        getFieldDecorator('content')
-                        (
-                            <Editor
-                                action=''
-                                onChange={this.EditorChange}
-                            />
-                        )}
-
+                <FormItem
+                    {...fu}
+                    label="成员介绍"
+                >
+                    {getFieldDecorator('introduce', {
+                        initialValue: this.props.props.content,
+                    })(
+                        <Editor {...c}></Editor>
+                    )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">提交</Button>
@@ -152,16 +131,34 @@ class RegistrationForm extends React.Component {
         );
     }
 }
+
 const WrappedRegistrationForm = Form.create()(RegistrationForm);
-class TeamAdd extends React.Component{
-    state = {
-        data:[]
+
+
+
+class TeamAdd extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            data: {name:'',ename:'',position:'',introduce:''},
+            isSuccess:false
+        }
+        this.changeSuccess=this.changeSuccess.bind(this)
     }
-    render(){
+    changeSuccess(){
+        this.setState({
+            isSussess:true
+        })
+    }
+    render() {
         return (
-            <AdminSider keys={'team_add'}>
-                <WrappedRegistrationForm/>
-            </AdminSider>
+            <div>
+                {
+                    this.state.isSussess ? <Redirect to="/admin/team/list"/> :  <AdminSider keys={'team_add'}>
+                        <WrappedRegistrationForm props={this.state.data} data={this.changeSuccess}></WrappedRegistrationForm>
+                    </AdminSider>
+                }
+            </div>
         )
     }
 }

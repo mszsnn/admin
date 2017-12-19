@@ -1,42 +1,47 @@
 import React from "react"
 import AdminSider from '../../components/sider.jsx';
-import {Table, Icon, Divider,message} from 'antd';
+import {Table, Icon, Divider, message} from 'antd';
 import {
     Link
 } from 'react-router-dom'
 class TeamList extends React.Component {
-    constructor(){
+    constructor() {
         super();
         this.handleDelete=this.handleDelete.bind(this);
     }
+
     state={
         data: []
     };
-    componentDidMount(){
-        fetch('/api/team/show').then(r=>r.json()).then(d=>{
+
+    componentDidMount() {
+        fetch('/api/team/show').then(r => r.json()).then(d => {
             this.setState({
-                data:d
+                data: d
             })
         })
     }
-    fetchData(){
-        fetch('/api/team/show').then(r=>r.json()).then(d=>{
+
+    fetchData() {
+        fetch('/api/team/show').then(r => r.json()).then(d => {
             this.setState({
-                data:d
+                data: d
             })
         })
     }
-    handleDelete(v){
-        fetch('/api/team/del?id='+v.id).then(r=>r.text()).then(r=>{
-            if(r==='ok'){
-                message.success('删除成功',1);
+
+    handleDelete(v) {
+        fetch('/api/team/del?id=' + v.id).then(r => r.text()).then(r => {
+            if (r === 'ok') {
+                message.success('删除成功', 1);
                 this.fetchData();
             }
         })
     }
+
     render() {
         let {data}=this.state;
-        data.forEach((v)=>{
+        data.forEach((v) => {
             v.key=v.id;
         });
         const columns=[{
@@ -47,7 +52,7 @@ class TeamList extends React.Component {
             title: '英文名称',
             dataIndex: 'ename',
             key: 'ename',
-        },{
+        }, {
             title: '图片',
             dataIndex: 'pic',
             key: 'pic',
@@ -56,16 +61,14 @@ class TeamList extends React.Component {
             dataIndex: 'position',
             key: 'position',
         }, {
-            title: '介绍',
-            dataIndex: 'introduce',
-            key: 'introduce',
-        },{
             title: '操作',
             key: 'action',
             render: (v) => (
                 <span>
-      <a  onClick={()=>{this.handleDelete(v)}}>删除</a><Divider type="vertical" />
-                    <Link to="/admin/team/eidt">修改</Link>
+      <a onClick={() => {
+          this.handleDelete(v)
+      }}>删除</a><Divider type="vertical"/>
+                    <Link to={"/admin/team/edit/"+v.id}>编辑</Link>
     </span>
             ),
         }];

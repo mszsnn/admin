@@ -4,6 +4,7 @@ class Editor extends React.Component{
     componentDidMount(){
         var editor=new E(this.el);
         var that=this;
+        this.e=editor;
         // 隐藏“网络图片”tab
         editor.customConfig.showLinkImg = false;
         // 上传图片到服务器
@@ -14,13 +15,19 @@ class Editor extends React.Component{
                 var url =result.url;
                 insertImg(url)
             }
-
         };
         editor.customConfig.onchange=function (html) {
             editor.change();
             that.props.onChange(html);
         }
-        editor.create()
+        editor.create();
+    }
+    componentDidUpdate(){
+        if(this.e.txt.html()==='<p><br></p>'){
+            this.e.txt.html(this.props.content);
+        }else{
+            return;
+        }
     }
     render(){
         return(
@@ -30,4 +37,5 @@ class Editor extends React.Component{
         )
     }
 }
+
 export default Editor;

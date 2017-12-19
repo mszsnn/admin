@@ -32,8 +32,8 @@ class AdminSider extends React.Component {
                                 <Menu.Item key="service_list"><Link to="/admin/service/list">管理服务</Link></Menu.Item>
                             </SubMenu>
                             <SubMenu key="sub5" title={<span><Icon type="switcher" />案例管理</span>}>
-                                <Menu.Item key="service_add"><Link to="/admin/case/add">新增案例</Link></Menu.Item>
-                                <Menu.Item key="service_list"><Link to="/admin/case/list">管理案例</Link></Menu.Item>
+                                <Menu.Item key="case_add"><Link to="/admin/case/add">新增案例</Link></Menu.Item>
+                                <Menu.Item key="case_list"><Link to="/admin/case/list">管理案例</Link></Menu.Item>
                             </SubMenu>
                         </Menu>
                     </Sider>
