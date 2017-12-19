@@ -47,7 +47,10 @@ class ServiceList extends React.Component {
     },{
         title:'宣传图',
         dataIndex:'img',
-        key:'img'
+        key:'img',
+        render: (obj, record) => (
+          <img width='80' src={obj} />
+      ), 
     },{
         title: '操作',
         key: 'handle',
@@ -58,11 +61,10 @@ class ServiceList extends React.Component {
             </span>
         ),
     }];
-
+  
     let {data}=this.state;
     data.forEach(v=>{
-      v.key=v.id;
-      
+      v.key=v.id; 
     })
     return (
       <AdminSider keys={'service_list'}>
