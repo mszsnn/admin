@@ -11,11 +11,11 @@ class RegistrationForm extends React.Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-        values.img = this.props.props.img;         
+    this.props.form.validateFieldsAndScroll((err, values) => {       
         if (!err) {
         values=JSON.stringify(values);
         fetch('/api/service/add',{
+          "credentials":'include',
           "method":'post',
           "body":values,
           "headers":{
@@ -32,11 +32,7 @@ class RegistrationForm extends React.Component {
       }
     });
   }
-  handleChange = (e) =>{
-        if(e.file){
-          this.props.props.img = e.file.response;
-        }
-  }
+  
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -67,9 +63,9 @@ class RegistrationForm extends React.Component {
     const fileList = [];
       const props = {
         action: '/api/service/upload',
-        onChange:this.handleChange, 
         listType: 'picture',
         defaultFileList: [...fileList],
+        withCredentials:true
       };
     //   upload img list
     return (
@@ -105,18 +101,13 @@ class RegistrationForm extends React.Component {
 
         <FormItem  {...formItemLayout}
           label="上传图片">
-           {getFieldDecorator('img', {
-            initialValue: this.props.props.img,
-            rules: [{
-              required: true, message: '请选择文件!',
-            }],
-          })(
+           
             <Upload {...props}>
                 <Button>
                     <Icon type="upload" /> upload
                 </Button>
              </Upload>
-            )}
+           
         </FormItem>
         
 

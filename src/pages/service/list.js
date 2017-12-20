@@ -11,7 +11,7 @@ class ServiceList extends React.Component {
     }
   }
   componentDidMount() {
-    fetch('/api/service/show').then(r=>r.json()).then(res=>{
+    fetch('/api/service/show',{credentials:'include'}).then(r=>r.json()).then(res=>{
        this.setState({
         data:res
        })
