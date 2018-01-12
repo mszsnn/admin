@@ -14,14 +14,14 @@ class RegistrationForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log(values);
-        values=JSON.stringify(values);
+       
+        let formdata=new FormData();
+        for(let i in values){
+          formdata.append(i,values[i]);
+        }
         fetch('/api/news/add',{
           "method":'post',
-          "body":values,
-          "headers":{
-            "Content-Type":"application/json"
-          }
+          "body":formdata
         }).then(r => r.text()).then(res => {
           if(res==='ok'){
             message.success("添加成功");

@@ -4,6 +4,7 @@ import { Table, message, Popconfirm } from 'antd';
 import { Link } from 'react-router-dom';
 import Editor from "./Editor";
 
+
 class NewsList extends React.Component {
   constructor() {
     super();
